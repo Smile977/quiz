@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './ActiveQuiz.module.scss'
+import AnswerList from '../../components/ActiveQuiz/AnswersList/AnswersList'
 
 const ActiveQuiz = props => {
   return (
@@ -13,12 +14,9 @@ const ActiveQuiz = props => {
         <small>4 из 12</small>
       </p>
 
-      <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-      </ul>
+      <AnswerList
+        answers={props.answers}
+      />
     </div>
   )
 }
