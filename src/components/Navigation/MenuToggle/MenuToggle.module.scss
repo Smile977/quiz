@@ -12,10 +12,7 @@
     opacity: .7;
   }
 
-
+  &.open {
+    left: 320px;
+  }
 }
-
-.MenuToggle.open {
-  left: 320px;
-}
-
