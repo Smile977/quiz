@@ -7,7 +7,7 @@ import {
   FINISH_QUIZ,
   QUIZ_NEXT_QUESTION, QUIZ_RETRY,
   QUIZ_SET_STATE
-} from "./actionsTypes";
+} from "./actionTypes";
 
 export function fetchQuizes() {
   return async dispatch => {

@@ -1,21 +1,20 @@
 import axios from 'axios'
-import {AUTH_LOGOUT, AUTH_SUCCESS} from "./actionsTypes";
+import {AUTH_LOGOUT, AUTH_SUCCESS} from './actionTypes';
 
 export function auth(email, password, isLogin) {
   return async dispatch => {
     const authData = {
-      email,
-      password,
+      email, password,
       returnSecureToken: true
     }
 
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBgILwQFZonPB3VwA4b7UfbAEQ-x8Jnm7U'
+    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBRj1R0UEHzbzdDaOOQIhjqWUvDsusN4Mo'
 
     if (isLogin) {
-      url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBgILwQFZonPB3VwA4b7UfbAEQ-x8Jnm7U'
+      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBRj1R0UEHzbzdDaOOQIhjqWUvDsusN4Mo'
     }
 
-    const response = await axios.post(url , authData)
+    const response = await axios.post(url, authData)
     const data = response.data
 
     const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
@@ -43,6 +42,24 @@ export function logout() {
   localStorage.removeItem('expirationDate')
   return {
     type: AUTH_LOGOUT
+  }
+}
+
+
+export function autoLogin() {
+  return dispatch => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      dispatch(logout())
+    } else {
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
+      if (expirationDate <= new Date()) {
+        dispatch(logout())
+      } else {
+        dispatch(authSuccess(token))
+        dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000))
+      }
+    }
   }
 }
 

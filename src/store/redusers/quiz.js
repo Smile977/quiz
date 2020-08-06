@@ -6,7 +6,7 @@ import {
   FINISH_QUIZ,
   QUIZ_NEXT_QUESTION, QUIZ_RETRY,
   QUIZ_SET_STATE
-} from "../actions/actionsTypes";
+} from "../actions/actionTypes";
 
 const initialState = {
   quizes: [],
